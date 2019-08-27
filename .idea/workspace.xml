@@ -1,19 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="bb666bbe-5817-4bdc-8740-34968ece39e0" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/Service/ImageUploader/ImageUploaderInterface.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Service/ImageUploader/PostImageUploader.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/translations/date.en.xliff" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/services.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config/services.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/FeedController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/FeedController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/DataFixtures/AppFixtures.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/DataFixtures/AppFixtures.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/Post.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Post.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Repository/PostRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/PostRepository.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/feed/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/feed/index.html.twig" afterDir="false" />
-    </list>
+    <list default="true" id="bb666bbe-5817-4bdc-8740-34968ece39e0" name="Default Changelist" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -162,7 +150,7 @@
       <workItem from="1565644124600" duration="618000" />
       <workItem from="1565689900525" duration="7060000" />
       <workItem from="1566212461337" duration="262000" />
-      <workItem from="1566914260996" duration="10947000" />
+      <workItem from="1566914260996" duration="11136000" />
     </task>
     <servers />
   </component>
