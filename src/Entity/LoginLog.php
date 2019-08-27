@@ -27,6 +27,14 @@ class LoginLog
      */
     private $user;
 
+    public function __construct(User $user)
+    {
+        $this->setUser($user);
+
+        $date = new \DateTime('now');
+        $this->setDate($date);
+    }
+
     public function getId(): ?int
     {
         return $this->id;
