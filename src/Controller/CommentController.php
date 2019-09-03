@@ -25,19 +25,27 @@ class CommentController extends AbstractController
      */
     public function like(Request $request, Comment $comment)
     {
+        $em = $this->getDoctrine()->getManager();
         $user = $this->getUser();
 
         if ($comment->isLikedBy($user)) {
-            return $this->json(["success" => false, "message" => "Comment was already liked."]);
+
+            $userLike = $comment->getUserLike($user);
+            $comment->removeCommentLike($userLike);
+            $em->persist($comment);
+            $em->flush();
+
+            $likeCount = $comment->getLikesCount();
+
+            return $this->json(["success" => true, "message" => "Post has been disliked.", "likeCount"=>$likeCount]);
         }
 
-        $em = $this->getDoctrine()->getManager();
-
         $like = new CommentLike();
-        $like->setComment($comment);
         $like->setUser($user);
+        $comment->addCommentLike($like);
 
         $em->persist($like);
+        $em->persist($comment);
         $em->flush();
 
         $likeCount = $comment->getLikesCount();

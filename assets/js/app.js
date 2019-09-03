@@ -32,7 +32,12 @@ $(document).ready(function() {
          success: function(response){
             var responseData = $.parseJSON(response);
             if (responseData.success) {
-               postBtn.children(".like-count").text(responseData.likeCount);
+
+               var text = "";
+               if(parseInt(responseData.likeCount) > 0)
+                  text = responseData.likeCount;
+
+               postBtn.children(".like-count").text(text);
 
             }
          }
@@ -51,7 +56,15 @@ $(document).ready(function() {
          success: function(response){
             var responseData = $.parseJSON(response);
             if (responseData.success) {
-               commentBtn.children(".like-count").text(responseData.likeCount);
+
+               var text = "";
+               if(parseInt(responseData.likeCount) > 0)
+                  text = responseData.likeCount;
+
+               console.log(response);
+               console.log(text);
+
+               commentBtn.children(".like-count").text(text);
 
             }
          }

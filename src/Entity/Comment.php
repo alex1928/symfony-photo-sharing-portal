@@ -99,6 +99,13 @@ class Comment
         return count($this->getCommentLikes());
     }
 
+    public function getUserLike(User $user): CommentLike
+    {
+        return $this->commentLikes->filter(function(CommentLike $like) use ($user) {
+            return $like->getUser()->getId() === $user->getId();
+        })->first();
+    }
+
     public function isLikedBy(User $user)
     {
         return $this->commentLikes->exists(function (int $index, CommentLike $like) use ($user) {
@@ -116,6 +123,16 @@ class Comment
             }
         }
 
+        return $this;
+    }
+
+    public function addCommentLike(CommentLike $commentLike): self
+    {
+        if (!$this->commentLikes->contains($commentLike)) {
+            $this->commentLikes->add($commentLike);
+
+            $commentLike->setComment($this);
+        }
         return $this;
     }
 

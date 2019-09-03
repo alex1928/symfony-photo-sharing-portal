@@ -87,6 +87,13 @@ class Post
         return $this->postLikes;
     }
 
+    public function getUserLike(User $user): PostLike
+    {
+        return $this->postLikes->filter(function(PostLike $like) use ($user) {
+           return $like->getUser()->getId() === $user->getId();
+        })->first();
+    }
+
     public function getLikesCount(): int
     {
         return count($this->getPostLikes());
@@ -97,6 +104,16 @@ class Post
         return $this->postLikes->exists(function (int $index, PostLike $like) use ($user) {
             return $like->getUser()->getId() === $user->getId();
         });
+    }
+
+    public function addPostLike(PostLike $postLike): self
+    {
+        if (!$this->postLikes->contains($postLike)) {
+            $this->postLikes->add($postLike);
+
+            $postLike->setPost($this);
+        }
+        return $this;
     }
 
     public function removePostLike(PostLike $postLike): self

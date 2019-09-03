@@ -56,18 +56,26 @@ class PostController extends AbstractController
     public function like(Request $request, Post $post, PostLikeRepository $postLikeRepository)
     {
         $user = $this->getUser();
-
-        if ($post->isLikedBy($user)) {
-            return $this->json(["success" => false, "message" => "Post was already liked."]);
-        }
-
         $em = $this->getDoctrine()->getManager();
 
+        if ($post->isLikedBy($user)) {
+
+            $userLike = $post->getUserLike($user);
+            $post->removePostLike($userLike);
+            $em->persist($post);
+            $em->flush();
+
+            $likeCount = $post->getLikesCount();
+
+            return $this->json(["success" => true, "message" => "Post has been disliked.", "likeCount"=>$likeCount]);
+        }
+
         $like = new PostLike();
-        $like->setPost($post);
         $like->setUser($user);
+        $post->addPostLike($like);
 
         $em->persist($like);
+        $em->persist($post);
         $em->flush();
 
         $likeCount = $post->getLikesCount();
