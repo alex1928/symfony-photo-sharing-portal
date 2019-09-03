@@ -5,6 +5,7 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\PostRepository")
@@ -29,6 +30,7 @@ class Post
     private $content;
 
     /**
+     * @Gedmo\Timestampable(on="create")
      * @ORM\Column(type="datetime")
      */
     private $addDate;
@@ -69,13 +71,6 @@ class Post
     public function getAddDate(): ?\DateTimeInterface
     {
         return $this->addDate;
-    }
-
-    public function setAddDate(\DateTimeInterface $addDate): self
-    {
-        $this->addDate = $addDate;
-
-        return $this;
     }
 
     /**

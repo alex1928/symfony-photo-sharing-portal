@@ -48,7 +48,6 @@ class AppFixtures extends Fixture implements ContainerAwareInterface
 
         $password = $this->passwordEncoder->encodePassword($user, 'devpass');
         $user->setPassword($password);
-        $user->setRegisterDate(new \DateTime('now'));
         $user->setRoles($roles);
 
         $this->manager->persist($user);

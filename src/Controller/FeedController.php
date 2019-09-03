@@ -8,6 +8,7 @@ use App\Repository\PostRepository;
 use App\Service\ImageUploader\PostImageUploader;
 use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -35,7 +36,7 @@ class FeedController extends AbstractController
 
         if ($newPostForm->isSubmitted() && $newPostForm->isValid()) {
 
-            $userImagesDirectory = $imagesDirectory . '/' .$user->getId();
+            $userImagesDirectory = $imagesDirectory . DIRECTORY_SEPARATOR .$user->getId();
             $imageFile = $newPostForm['image']->getData();
             $imageUploader->upload($imageFile, $userImagesDirectory);
 
@@ -43,7 +44,6 @@ class FeedController extends AbstractController
 
                 $imageFileName = $imageUploader->getFileName();
                 $post->setImage($imageFileName);
-                $post->setAddDate(new \DateTime('now'));
                 $post->setUser($user);
 
                 $em->persist($post);
@@ -67,4 +67,7 @@ class FeedController extends AbstractController
             'posts' => $posts,
         ]);
     }
+
+
+
 }

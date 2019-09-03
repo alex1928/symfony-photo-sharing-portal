@@ -5,6 +5,7 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
 
@@ -43,6 +44,7 @@ class User implements UserInterface
     private $email;
 
     /**
+     * @Gedmo\Timestampable(on="create")
      * @ORM\Column(type="datetime")
      */
     private $registerDate;
@@ -145,13 +147,6 @@ class User implements UserInterface
     public function getRegisterDate(): ?\DateTimeInterface
     {
         return $this->registerDate;
-    }
-
-    public function setRegisterDate(\DateTimeInterface $registerDate): self
-    {
-        $this->registerDate = $registerDate;
-
-        return $this;
     }
 
     /**
