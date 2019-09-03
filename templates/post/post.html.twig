@@ -4,8 +4,27 @@
     <div class="card-body">
         <p class="card-text">{{ post.content }}</p>
 
-        {% for comment in post. %}
+        {% for comment in post.comments %}
 
+            {% include 'post/comment.html.twig' %}
+
+        {% endfor %}
+
+        {{ form_start(comment_form) }}
+
+        <div class="form-row">
+            <div class="form-group col-md-9">
+                {{ form_errors(comment_form.content) }}
+                {{ form_widget(comment_form.content, { 'attr': { 'class': 'form-control', 'rows': 2}}) }}
+            </div>
+
+            <div class="form-group col-md-3">
+                <button class="btn btn-lg btn-success float-right" type="submit">Comment</button>
+            </div>
+
+        </div>
+
+        {{ form_end(comment_form) }}
     </div>
     <div class="card-footer text-muted">
         {{ post.addDate|date("m.d.Y H:i") }}
