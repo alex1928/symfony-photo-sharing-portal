@@ -87,19 +87,16 @@ class Post
         return $this->postLikes;
     }
 
-    public function getPostLikesCount(): int
+    public function getLikesCount(): int
     {
         return count($this->getPostLikes());
     }
 
-    public function addPostLike(PostLike $postLike): self
+    public function isLikedBy(User $user)
     {
-        if (!$this->postLikes->contains($postLike)) {
-            $this->postLikes[] = $postLike;
-            $postLike->setPost($this);
-        }
-
-        return $this;
+        return $this->postLikes->exists(function (int $index, PostLike $like) use ($user) {
+            return $like->getUser()->getId() === $user->getId();
+        });
     }
 
     public function removePostLike(PostLike $postLike): self

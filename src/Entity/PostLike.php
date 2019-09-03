@@ -18,7 +18,7 @@ class PostLike extends Like
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Post", inversedBy="postLikes")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\JoinColumn(nullable=true)
      */
     private $post;
 

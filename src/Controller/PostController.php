@@ -51,13 +51,13 @@ class PostController extends AbstractController
 
 
     /**
-     * @Route("/post/{id<\d+>}/like", name="new_post_like")
+     * @Route("/post/{id<\d+>}/like", name="post_like")
      */
-    public function newPostLike(Request $request, Post $post, PostLikeRepository $postLikeRepository)
+    public function like(Request $request, Post $post, PostLikeRepository $postLikeRepository)
     {
         $user = $this->getUser();
 
-        if ($postLikeRepository->isPostLikedBy($post, $user)) {
+        if ($post->isLikedBy($user)) {
             return $this->json(["success" => false, "message" => "Post was already liked."]);
         }
 
@@ -70,7 +70,7 @@ class PostController extends AbstractController
         $em->persist($like);
         $em->flush();
 
-        $likeCount = $post->getPostLikesCount();
+        $likeCount = $post->getLikesCount();
 
         return $this->json(["success" => true, "message" => "Post has been liked.", "likeCount"=>$likeCount]);
     }

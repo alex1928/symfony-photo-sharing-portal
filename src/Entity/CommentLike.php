@@ -17,9 +17,8 @@ class CommentLike extends Like
     private $id;
 
     /**
-     * @ORM\Column(options={"default":0})
      * @ORM\ManyToOne(targetEntity="App\Entity\Comment", inversedBy="commentLikes")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\JoinColumn(nullable=true)
      */
     private $comment;
 

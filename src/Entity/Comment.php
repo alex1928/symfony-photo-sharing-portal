@@ -94,14 +94,16 @@ class Comment
         return $this->commentLikes;
     }
 
-    public function addCommentLike(CommentLike $commentLike): self
+    public function getLikesCount(): int
     {
-        if (!$this->commentLikes->contains($commentLike)) {
-            $this->commentLikes[] = $commentLike;
-            $commentLike->setComment($this);
-        }
+        return count($this->getCommentLikes());
+    }
 
-        return $this;
+    public function isLikedBy(User $user)
+    {
+        return $this->commentLikes->exists(function (int $index, CommentLike $like) use ($user) {
+            return $like->getUser()->getId() === $user->getId();
+        });
     }
 
     public function removeCommentLike(CommentLike $commentLike): self

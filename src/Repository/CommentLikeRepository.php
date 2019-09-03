@@ -2,7 +2,10 @@
 
 namespace App\Repository;
 
+use App\Entity\Comment;
 use App\Entity\CommentLike;
+use App\Entity\Post;
+use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 

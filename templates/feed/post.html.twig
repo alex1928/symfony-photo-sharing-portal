@@ -17,6 +17,6 @@
     </div>
     <div class="card-footer text-muted">
         {{ post.addDate|date("m.d.Y H:i") }}
-        <a class="float-right btn text-white btn-danger post-like-btn" post-id="{{ post.getId }}"> <i class="like-count">{{ post.getPostLikesCount > 0 ? post.getPostLikesCount : '' }}</i> <i class="fa fa-heart"></i> Like</a>
+        <a class="float-right btn text-white btn-danger post-like-btn" post-id="{{ post.getId }}"> <i class="like-count">{{ post.getLikesCount > 0 ? post.getLikesCount : '' }}</i> <i class="fa fa-heart"></i> Like</a>
     </div>
 </div>

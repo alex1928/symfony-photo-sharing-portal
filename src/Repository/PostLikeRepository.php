@@ -21,17 +21,6 @@ class PostLikeRepository extends ServiceEntityRepository
         parent::__construct($registry, PostLike::class);
     }
 
-    public function isPostLikedBy(Post $post, User $user): bool
-    {
-        return $this->createQueryBuilder('p')
-            ->andWhere('p.post = :post')
-            ->setParameter('post', $post)
-            ->andWhere('p.user = :user')
-            ->setParameter('user', $user)
-            ->getQuery()
-            ->getOneOrNullResult() !== null;
-    }
-
     // /**
     //  * @return PostLike[] Returns an array of PostLike objects
     //  */

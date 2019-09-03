@@ -38,4 +38,23 @@ $(document).ready(function() {
          }
       });
    });
+
+   $(".comment-like-btn").on('click', function () {
+
+      var commentBtn = $(this);
+      var commentId = commentBtn.attr('post-comment-id');
+
+      $.ajax({
+         type: "POST",
+         dataType: "html",
+         url: "/comment/" + commentId + "/like",
+         success: function(response){
+            var responseData = $.parseJSON(response);
+            if (responseData.success) {
+               commentBtn.children(".like-count").text(responseData.likeCount);
+
+            }
+         }
+      });
+   });
 });
