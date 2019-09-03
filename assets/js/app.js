@@ -15,3 +15,27 @@ require('@fortawesome/fontawesome-free/css/all.min.css');
 require('@fortawesome/fontawesome-free/js/all.js');
 require('bootstrap');
 
+
+
+$(document).ready(function() {
+
+   $(".post-like-btn").on('click', function () {
+
+      var postBtn = $(this);
+      var postId = postBtn.attr('post-id');
+
+
+      $.ajax({
+         type: "POST",
+         dataType: "html",
+         url: "/post/" + postId + "/like",
+         success: function(response){
+            var responseData = $.parseJSON(response);
+            if (responseData.success) {
+               postBtn.children(".like-count").text(responseData.likeCount);
+
+            }
+         }
+      });
+   });
+});

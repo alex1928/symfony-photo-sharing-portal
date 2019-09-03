@@ -3,6 +3,8 @@
 namespace App\Repository;
 
 use App\Entity\PostLike;
+use App\Entity\Post;
+use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
@@ -17,6 +19,17 @@ class PostLikeRepository extends ServiceEntityRepository
     public function __construct(RegistryInterface $registry)
     {
         parent::__construct($registry, PostLike::class);
+    }
+
+    public function isPostLikedBy(Post $post, User $user): bool
+    {
+        return $this->createQueryBuilder('p')
+            ->andWhere('p.post = :post')
+            ->setParameter('post', $post)
+            ->andWhere('p.user = :user')
+            ->setParameter('user', $user)
+            ->getQuery()
+            ->getOneOrNullResult() !== null;
     }
 
     // /**

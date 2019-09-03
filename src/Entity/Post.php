@@ -87,6 +87,11 @@ class Post
         return $this->postLikes;
     }
 
+    public function getPostLikesCount(): int
+    {
+        return count($this->getPostLikes());
+    }
+
     public function addPostLike(PostLike $postLike): self
     {
         if (!$this->postLikes->contains($postLike)) {

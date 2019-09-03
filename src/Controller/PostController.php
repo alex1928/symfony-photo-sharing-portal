@@ -4,10 +4,12 @@ namespace App\Controller;
 
 use App\Entity\Comment;
 use App\Entity\Post;
+use App\Entity\PostLike;
 use App\Form\CommentFormType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use App\Repository\PostLikeRepository;
 
 class PostController extends AbstractController
 {
@@ -47,4 +49,29 @@ class PostController extends AbstractController
         ]);
     }
 
+
+    /**
+     * @Route("/post/{id<\d+>}/like", name="new_post_like")
+     */
+    public function newPostLike(Request $request, Post $post, PostLikeRepository $postLikeRepository)
+    {
+        $user = $this->getUser();
+
+        if ($postLikeRepository->isPostLikedBy($post, $user)) {
+            return $this->json(["success" => false, "message" => "Post was already liked."]);
+        }
+
+        $em = $this->getDoctrine()->getManager();
+
+        $like = new PostLike();
+        $like->setPost($post);
+        $like->setUser($user);
+
+        $em->persist($like);
+        $em->flush();
+
+        $likeCount = $post->getPostLikesCount();
+
+        return $this->json(["success" => true, "message" => "Post has been liked.", "likeCount"=>$likeCount]);
+    }
 }
