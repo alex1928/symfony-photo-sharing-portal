@@ -62,7 +62,6 @@ class AppFixtures extends Fixture implements ContainerAwareInterface
 
         $content = $this->faker->paragraphs(3, true);
         $post->setContent($content);
-        $post->setAddDate(new \DateTime('now'));
         $post->setImage('default.png');
         $post->setUser($user);
 

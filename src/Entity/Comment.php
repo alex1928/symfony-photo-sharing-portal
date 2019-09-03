@@ -41,6 +41,12 @@ class Comment
      */
     private $commentLikes;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Post", inversedBy="comments")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $post;
+
     public function __construct()
     {
         $this->commentLikes = new ArrayCollection();
@@ -107,6 +113,18 @@ class Comment
                 $commentLike->setComment(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getPost(): ?Post
+    {
+        return $this->post;
+    }
+
+    public function setPost(?Post $post): self
+    {
+        $this->post = $post;
 
         return $this;
     }
