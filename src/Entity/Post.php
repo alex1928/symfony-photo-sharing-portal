@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Service\HashtagManager\Hashtaggable;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -10,7 +11,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
 /**
  * @ORM\Entity(repositoryClass="App\Repository\PostRepository")
  */
-class Post
+class Post implements Hashtaggable
 {
     /**
      * @ORM\Id()
