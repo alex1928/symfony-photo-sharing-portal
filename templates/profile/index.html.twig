@@ -4,35 +4,40 @@
 
 {% block content %}
 
-    <!-- New post -->
-    <div class="card mb-4">
+    <h1>{{ user.username }} profile</h1>
+
+    <div class="card">
+        <h5 class="card-header">About me</h5>
         <div class="card-body">
-            <h2>New Post</h2>
-            {{ form_start(post_form) }}
+            {% if user.aboutMe is null or user.aboutMe|length == 0 %}
 
-            <div class="form-row">
-                <div class="form-group col-md-12">
-                    {{ form_errors(post_form.content) }}
-                    {{ form_widget(post_form.content, { 'attr': { 'class': 'form-control', 'rows': 5}}) }}
-                </div>
+                <p class="card-text">{{ user.username }} didn't write anything about himself :(</p>
 
-                <div class="form-group col-md-12">
-                    {{ form_errors(post_form.image) }}
-                    {{ form_widget(post_form.image) }}
-                    <button class="btn btn-lg btn-success float-right" type="submit">Publish</button>
-                </div>
+            {% else %}
 
-            </div>
+                <p class="card-text">{{ user.aboutMe }}</p>
 
-            {{ form_end(post_form) }}
+            {% endif %}
+
 
         </div>
     </div>
 
-    {% for post in posts %}
+    <div class="row">
 
-        {% include 'feed/post.html.twig' %}
+        {% for post in posts %}
 
-    {% endfor %}
+            {% include 'profile/post-miniature.html.twig' %}
+
+            {% if loop.index % 3 == 0 %}
+
+                <div class="w-100"></div>
+
+            {% endif %}
+
+
+        {% endfor %}
+
+    </div>
 
 {% endblock %}

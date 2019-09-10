@@ -1,0 +1,14 @@
+<div class="col">
+    <a href="{{ path('show_post', { id: post.getId }) }}">
+        <div class="card post-miniature mb-3 mt-3">
+
+            <div class="card-img-top">
+                <img class="card-img-top" src="{{ "/uploads/images/" ~ post.user.getId ~ "/" ~ post.image }}">
+            </div>
+
+            <div class="card-body">
+                <p class="card-text">{{ post.content|truncate(30, true) }}</p>
+            </div>
+        </div>
+    </a>
+</div>
