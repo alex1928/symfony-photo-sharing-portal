@@ -2,7 +2,7 @@
 <div class="card mb-4">
     <img class="card-img-top" src="{{ "/uploads/images/" ~ post.user.getId ~ "/" ~ post.image }}">
     <div class="card-body">
-        <p class="card-text">{{ post.content }}</p>
+        <p class="card-text">{{ post.content|raw }}</p>
 
         {% for comment in post.comments %}
 

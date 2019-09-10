@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Service\HashtagManager\Hashtaggable;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -14,7 +15,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
  * @UniqueEntity(fields={"username"}, message="There is already an account with this username")
  * @UniqueEntity(fields={"email"}, message="There is already an account with this email")
  */
-class User implements UserInterface
+class User implements UserInterface, Hashtaggable
 {
     /**
      * @ORM\Id()
@@ -61,11 +62,17 @@ class User implements UserInterface
     private $aboutMe;
 
     /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\Hashtag", mappedBy="users")
+     */
+    private $hashtags;
+
+    /**
      * User constructor.
      */
     public function __construct()
     {
         $this->notifications = new ArrayCollection();
+        $this->hashtags = new ArrayCollection();
     }
 
     /**
@@ -222,14 +229,65 @@ class User implements UserInterface
         return $this;
     }
 
+    /**
+     * @return string|null
+     */
     public function getAboutMe(): ?string
     {
         return $this->aboutMe;
     }
 
+    /**
+     * @return string|null
+     */
+    public function getContent(): ?string
+    {
+        return $this->getAboutMe();
+    }
+
+    /**
+     * @param string|null $aboutMe
+     * @return User
+     */
     public function setAboutMe(?string $aboutMe): self
     {
         $this->aboutMe = $aboutMe;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Hashtag[]
+     */
+    public function getHashtags(): Collection
+    {
+        return $this->hashtags;
+    }
+
+    /**
+     * @param Hashtag $hashtag
+     * @return User
+     */
+    public function addHashtag(Hashtag $hashtag): self
+    {
+        if (!$this->hashtags->contains($hashtag)) {
+            $this->hashtags[] = $hashtag;
+            $hashtag->addUser($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @param Hashtag $hashtag
+     * @return User
+     */
+    public function removeHashtag(Hashtag $hashtag): self
+    {
+        if ($this->hashtags->contains($hashtag)) {
+            $this->hashtags->removeElement($hashtag);
+            $hashtag->removeUser($this);
+        }
 
         return $this;
     }

@@ -3,11 +3,16 @@
 namespace App\Controller;
 
 use App\Entity\Comment;
+use App\Entity\Hashtag;
 use App\Entity\Post;
 use App\Entity\PostLike;
 use App\Form\CommentFormType;
 use App\Form\PostFormType;
+use App\Repository\HashtagRepository;
+use App\Service\HashtagManager\HashtagManager;
 use App\Service\ImageUploader\PostImageUploader;
+use App\Service\PostsTextParser\PostsTextParser;
+use App\Service\TextParser\HashtagParser;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -20,6 +25,10 @@ class PostController extends AbstractController
      */
     public function index(Post $post)
     {
+        $hashtagParser = new HashtagParser('<a href="/hashtag/${1}">${1}</a>');
+        $postsParser = new PostsTextParser([$hashtagParser]);
+        $postsParser->parse($post);
+
         $comment = new Comment();
         $commentForm = $this->createForm(CommentFormType::class, $comment);
 
@@ -36,7 +45,7 @@ class PostController extends AbstractController
      * @param PostImageUploader $imageUploader
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function newPost(Request $request, PostImageUploader $imageUploader)
+    public function newPost(Request $request, PostImageUploader $imageUploader, HashtagRepository $hashtagRepository, HashtagManager $hashtagManager)
     {
         $user = $this->getUser();
         $post = new Post();
@@ -64,8 +73,10 @@ class PostController extends AbstractController
         $imageFileName = $imageUploader->getFileName();
         $post->setImage($imageFileName);
         $post->setUser($user);
+        $hashtagManager->createHashtags($post);
 
         $em = $this->getDoctrine()->getManager();
+
         $em->persist($post);
         $em->flush();
 
