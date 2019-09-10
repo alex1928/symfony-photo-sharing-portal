@@ -1,0 +1,21 @@
+<div class="card">
+    <h5 class="card-header">About me
+        {% if app.user.getId == user.getId %}
+            <a class="float-right" href="{{ path('profile_edit') }}">Edit</a>
+        {% endif %}
+    </h5>
+
+    <div class="card-body">
+
+        {% if user.aboutMe is null or user.aboutMe|length == 0 %}
+
+            <p class="card-text">{{ user.username }} didn't write anything about himself :(</p>
+
+        {% else %}
+
+            <p class="card-text">{{ user.aboutMe }}</p>
+
+        {% endif %}
+
+    </div>
+</div>

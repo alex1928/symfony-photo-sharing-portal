@@ -13,13 +13,13 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarResponsive">
                 <ul class="navbar-nav ml-auto">
-                    <li class="nav-item active">
+                    <li class="nav-item {{ app.request.get('_route') == 'feed' ? 'active' }}">
                         <a class="nav-link" href="{{ path('feed') }}">Feed
                             <span class="sr-only">(current)</span>
                         </a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ path('profile') }}">Profile</a>
+                    <li class="nav-item {{ app.request.get('_route') in ['profile_show', 'profile_edit', 'post_show'] ? 'active' }}">
+                        <a class="nav-link" href="{{ path('profile_show', {'id': app.user.id}) }}">Profile</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{{ path('app_logout') }}">Logout</a>

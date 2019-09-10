@@ -55,6 +55,11 @@ class User implements UserInterface
     private $notifications;
 
     /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $aboutMe;
+
+    /**
      * User constructor.
      */
     public function __construct()
@@ -212,6 +217,18 @@ class User implements UserInterface
                 $notification->setUser(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getAboutMe(): ?string
+    {
+        return $this->aboutMe;
+    }
+
+    public function setAboutMe(?string $aboutMe): self
+    {
+        $this->aboutMe = $aboutMe;
 
         return $this;
     }
