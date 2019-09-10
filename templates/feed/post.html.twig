@@ -16,7 +16,7 @@
 
     </div>
     <div class="card-footer text-muted">
-        <a class="btn btn-link float-left" href="{{ path('profile', {'id': post.user.getId}) }}"><strong>{{ post.user.getUsername }}</strong></a><div class="float-left btn">{{ post.addDate|date("m.d.Y H:i") }}</div>
+        <a class="btn btn-link float-left" href="{{ path('profile_show', {'id': post.user.getId}) }}"><strong>{{ post.user.getUsername }}</strong></a><div class="float-left btn">{{ post.addDate|date("m.d.Y H:i") }}</div>
         <a class="float-right btn text-white btn-danger post-like-btn" post-id="{{ post.getId }}"> <i class="like-count">{{ post.getLikesCount > 0 ? post.getLikesCount : '' }}</i> <i class="fa fa-heart"></i> Like</a>
     </div>
 </div>
