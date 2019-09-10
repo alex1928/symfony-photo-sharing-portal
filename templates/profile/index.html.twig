@@ -1,20 +1,38 @@
-{% extends 'base.html.twig' %}
+{% extends 'base-authenticated.html.twig' %}
 
-{% block title %}Hello ProfileController!{% endblock %}
+{% block title %}{% trans %}Profile{% endtrans %}{% endblock %}
 
-{% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+{% block content %}
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+    <!-- New post -->
+    <div class="card mb-4">
+        <div class="card-body">
+            <h2>New Post</h2>
+            {{ form_start(post_form) }}
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ '/Users/alexanderwozniak/Projekty/symfony/symfony-photo-sharing-portal/src/Controller/ProfileController.php'|file_link(0) }}">src/Controller/ProfileController.php</a></code></li>
-        <li>Your template at <code><a href="{{ '/Users/alexanderwozniak/Projekty/symfony/symfony-photo-sharing-portal/templates/profile/index.html.twig'|file_link(0) }}">templates/profile/index.html.twig</a></code></li>
-    </ul>
-</div>
+            <div class="form-row">
+                <div class="form-group col-md-12">
+                    {{ form_errors(post_form.content) }}
+                    {{ form_widget(post_form.content, { 'attr': { 'class': 'form-control', 'rows': 5}}) }}
+                </div>
+
+                <div class="form-group col-md-12">
+                    {{ form_errors(post_form.image) }}
+                    {{ form_widget(post_form.image) }}
+                    <button class="btn btn-lg btn-success float-right" type="submit">Publish</button>
+                </div>
+
+            </div>
+
+            {{ form_end(post_form) }}
+
+        </div>
+    </div>
+
+    {% for post in posts %}
+
+        {% include 'feed/post.html.twig' %}
+
+    {% endfor %}
+
 {% endblock %}
