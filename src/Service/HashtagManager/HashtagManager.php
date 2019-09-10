@@ -48,33 +48,30 @@ class HashtagManager
         $hashtagsInDatabase = $this->hashtagRepository->findHashtagsWithNames($hashtagsInText);
 
         foreach ($hashtagsInText as $textHashtag) {
-
-            $newHashtag = null;
-
-            foreach ($hashtagsInDatabase as $hashtagInDatabase) {
-                if ($hashtagInDatabase->getName() === $textHashtag) {
-                    $newHashtag = $hashtagInDatabase;
-                    break;
-                }
-            }
-
-            if ($newHashtag === null) {
-                $newHashtag = $this->crateNewHashtag($textHashtag);
-                $this->em->persist($newHashtag);
-            }
-
-            $hashtaggable->addHashtag($newHashtag);
+            $hashtag = $this->getOrCreateHashtag($textHashtag, $hashtagsInDatabase);
+            $hashtaggable->addHashtag($hashtag);
         }
     }
 
     /**
      * @param string $textHashtag
-     * @return Hashtag
+     * @param array $hashtagsInDatabase
      */
-    private function crateNewHashtag(string $textHashtag): Hashtag
+    private function getOrCreateHashtag(string $textHashtag, array $hashtagsInDatabase): Hashtag
     {
-        $newHashtag = new Hashtag();
-        $newHashtag->setName($textHashtag);
+        $newHashtag = null;
+
+        foreach ($hashtagsInDatabase as $hashtagInDatabase) {
+            if ($hashtagInDatabase->getName() === $textHashtag) {
+                $newHashtag = $hashtagInDatabase;
+                break;
+            }
+        }
+
+        if ($newHashtag === null) {
+            $newHashtag = new Hashtag($textHashtag);
+            $this->em->persist($newHashtag);
+        }
 
         return $newHashtag;
     }

@@ -33,10 +33,11 @@ class Hashtag
      */
     private $posts;
 
-    public function __construct()
+    public function __construct(string $name)
     {
         $this->users = new ArrayCollection();
         $this->posts = new ArrayCollection();
+        $this->name  = $name;
     }
 
     public function getId(): ?int
