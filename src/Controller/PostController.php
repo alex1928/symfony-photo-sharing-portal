@@ -16,7 +16,7 @@ use App\Repository\PostLikeRepository;
 class PostController extends AbstractController
 {
     /**
-     * @Route("/post/{id<\d+>}", name="show_post", methods={"GET"})
+     * @Route("/post/{id<\d+>}", name="post_show", methods={"GET"})
      */
     public function index(Post $post)
     {
@@ -31,7 +31,7 @@ class PostController extends AbstractController
     }
 
     /**
-     * @Route("/post/new", name="new_post", methods={"POST"})
+     * @Route("/post/new", name="post_new", methods={"POST"})
      * @param Request $request
      * @param PostImageUploader $imageUploader
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
@@ -87,7 +87,7 @@ class PostController extends AbstractController
 
             $this->addFlash('error', "Comment has not been added.");
 
-            return $this->redirectToRoute('show_post', [
+            return $this->redirectToRoute('post_show', [
                 'id' => $post->getId()
             ]);
         }
@@ -103,7 +103,7 @@ class PostController extends AbstractController
 
         $this->addFlash('success', "Comment has been added.");
 
-        return $this->redirectToRoute('show_post', [
+        return $this->redirectToRoute('post_show', [
             'id' => $post->getId()
         ]);
     }

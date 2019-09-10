@@ -22,7 +22,7 @@ class PostFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->setAction($this->urlGenerator->generate("new_post"))
+            ->setAction($this->urlGenerator->generate("post_new"))
             ->add('content')
             ->add('image', FileType::class, [
                 'label' => 'Image',
