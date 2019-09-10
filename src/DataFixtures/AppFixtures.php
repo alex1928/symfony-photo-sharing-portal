@@ -40,7 +40,7 @@ class AppFixtures extends Fixture implements ContainerAwareInterface
 
     private function loadUser(): User
     {
-        $roles = ["ROLE_USER", "ROLE_ADMIN"];
+        $roles = ["ROLE_ADMIN"];
 
         $user = new User();
         $user->setUsername("admin");
