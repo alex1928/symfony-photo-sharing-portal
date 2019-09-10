@@ -61,11 +61,17 @@ class User implements UserInterface
     private $aboutMe;
 
     /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\Hashtag", mappedBy="users")
+     */
+    private $hashtags;
+
+    /**
      * User constructor.
      */
     public function __construct()
     {
         $this->notifications = new ArrayCollection();
+        $this->hashtags = new ArrayCollection();
     }
 
     /**
@@ -230,6 +236,34 @@ class User implements UserInterface
     public function setAboutMe(?string $aboutMe): self
     {
         $this->aboutMe = $aboutMe;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Hashtag[]
+     */
+    public function getHashtags(): Collection
+    {
+        return $this->hashtags;
+    }
+
+    public function addHashtag(Hashtag $hashtag): self
+    {
+        if (!$this->hashtags->contains($hashtag)) {
+            $this->hashtags[] = $hashtag;
+            $hashtag->addUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeHashtag(Hashtag $hashtag): self
+    {
+        if ($this->hashtags->contains($hashtag)) {
+            $this->hashtags->removeElement($hashtag);
+            $hashtag->removeUser($this);
+        }
 
         return $this;
     }

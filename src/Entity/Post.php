@@ -52,12 +52,18 @@ class Post
     private $comments;
 
     /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\Hashtag", mappedBy="posts")
+     */
+    private $hashtags;
+
+    /**
      * Post constructor.
      */
     public function __construct()
     {
         $this->postLikes = new ArrayCollection();
         $this->comments = new ArrayCollection();
+        $this->hashtags = new ArrayCollection();
     }
 
     /**
@@ -236,6 +242,34 @@ class Post
             if ($comment->getPost() === $this) {
                 $comment->setPost(null);
             }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Hashtag[]
+     */
+    public function getHashtags(): Collection
+    {
+        return $this->hashtags;
+    }
+
+    public function addHashtag(Hashtag $hashtag): self
+    {
+        if (!$this->hashtags->contains($hashtag)) {
+            $this->hashtags[] = $hashtag;
+            $hashtag->addPost($this);
+        }
+
+        return $this;
+    }
+
+    public function removeHashtag(Hashtag $hashtag): self
+    {
+        if ($this->hashtags->contains($hashtag)) {
+            $this->hashtags->removeElement($hashtag);
+            $hashtag->removePost($this);
         }
 
         return $this;
