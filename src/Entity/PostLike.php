@@ -22,16 +22,26 @@ class PostLike extends Like
      */
     private $post;
 
+    /**
+     * @return int|null
+     */
     public function getId(): ?int
     {
         return $this->id;
     }
 
+    /**
+     * @return Post|null
+     */
     public function getPost(): ?Post
     {
         return $this->post;
     }
 
+    /**
+     * @param Post|null $post
+     * @return PostLike
+     */
     public function setPost(?Post $post): self
     {
         $this->post = $post;

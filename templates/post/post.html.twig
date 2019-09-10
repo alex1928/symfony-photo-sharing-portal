@@ -10,7 +10,7 @@
 
         {% endfor %}
 
-        {{ form_start(comment_form) }}
+        {{ form_start(comment_form, {'action': path('new_comment', {'id': post.getId})}) }}
 
         <div class="form-row">
             <div class="form-group col-md-9">

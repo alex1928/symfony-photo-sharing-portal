@@ -27,6 +27,11 @@ class LoginLog
      */
     private $user;
 
+    /**
+     * LoginLog constructor.
+     * @param User $user
+     * @throws \Exception
+     */
     public function __construct(User $user)
     {
         $this->setUser($user);
@@ -35,16 +40,26 @@ class LoginLog
         $this->setDate($date);
     }
 
+    /**
+     * @return int|null
+     */
     public function getId(): ?int
     {
         return $this->id;
     }
 
+    /**
+     * @return \DateTimeInterface|null
+     */
     public function getDate(): ?\DateTimeInterface
     {
         return $this->date;
     }
 
+    /**
+     * @param \DateTimeInterface $date
+     * @return LoginLog
+     */
     public function setDate(\DateTimeInterface $date): self
     {
         $this->date = $date;
@@ -52,11 +67,18 @@ class LoginLog
         return $this;
     }
 
+    /**
+     * @return User|null
+     */
     public function getUser(): ?User
     {
         return $this->user;
     }
 
+    /**
+     * @param User|null $user
+     * @return LoginLog
+     */
     public function setUser(?User $user): self
     {
         $this->user = $user;

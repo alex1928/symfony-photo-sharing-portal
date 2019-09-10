@@ -47,21 +47,34 @@ class Comment
      */
     private $post;
 
+    /**
+     * Comment constructor.
+     */
     public function __construct()
     {
         $this->commentLikes = new ArrayCollection();
     }
 
+    /**
+     * @return int|null
+     */
     public function getId(): ?int
     {
         return $this->id;
     }
 
+    /**
+     * @return string|null
+     */
     public function getContent(): ?string
     {
         return $this->content;
     }
 
+    /**
+     * @param string $content
+     * @return Comment
+     */
     public function setContent(string $content): self
     {
         $this->content = $content;
@@ -69,16 +82,26 @@ class Comment
         return $this;
     }
 
+    /**
+     * @return \DateTimeInterface|null
+     */
     public function getAddDate(): ?\DateTimeInterface
     {
         return $this->addDate;
     }
 
+    /**
+     * @return User|null
+     */
     public function getUser(): ?User
     {
         return $this->user;
     }
 
+    /**
+     * @param User|null $user
+     * @return Comment
+     */
     public function setUser(?User $user): self
     {
         $this->user = $user;
@@ -94,11 +117,18 @@ class Comment
         return $this->commentLikes;
     }
 
+    /**
+     * @return int
+     */
     public function getLikesCount(): int
     {
         return count($this->getCommentLikes());
     }
 
+    /**
+     * @param User $user
+     * @return CommentLike
+     */
     public function getUserLike(User $user): CommentLike
     {
         return $this->commentLikes->filter(function(CommentLike $like) use ($user) {
@@ -106,6 +136,10 @@ class Comment
         })->first();
     }
 
+    /**
+     * @param User $user
+     * @return bool
+     */
     public function isLikedBy(User $user)
     {
         return $this->commentLikes->exists(function (int $index, CommentLike $like) use ($user) {
@@ -113,6 +147,10 @@ class Comment
         });
     }
 
+    /**
+     * @param CommentLike $commentLike
+     * @return Comment
+     */
     public function removeCommentLike(CommentLike $commentLike): self
     {
         if ($this->commentLikes->contains($commentLike)) {
@@ -126,6 +164,10 @@ class Comment
         return $this;
     }
 
+    /**
+     * @param CommentLike $commentLike
+     * @return Comment
+     */
     public function addCommentLike(CommentLike $commentLike): self
     {
         if (!$this->commentLikes->contains($commentLike)) {
@@ -136,11 +178,18 @@ class Comment
         return $this;
     }
 
+    /**
+     * @return Post|null
+     */
     public function getPost(): ?Post
     {
         return $this->post;
     }
 
+    /**
+     * @param Post|null $post
+     * @return Comment
+     */
     public function setPost(?Post $post): self
     {
         $this->post = $post;

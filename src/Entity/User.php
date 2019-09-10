@@ -54,11 +54,17 @@ class User implements UserInterface
      */
     private $notifications;
 
+    /**
+     * User constructor.
+     */
     public function __construct()
     {
         $this->notifications = new ArrayCollection();
     }
 
+    /**
+     * @return int|null
+     */
     public function getId(): ?int
     {
         return $this->id;
@@ -74,6 +80,10 @@ class User implements UserInterface
         return (string) $this->username;
     }
 
+    /**
+     * @param string $username
+     * @return User
+     */
     public function setUsername(string $username): self
     {
         $this->username = $username;
@@ -93,6 +103,10 @@ class User implements UserInterface
         return array_unique($roles);
     }
 
+    /**
+     * @param array $roles
+     * @return User
+     */
     public function setRoles(array $roles): self
     {
         $this->roles = $roles;
@@ -108,6 +122,10 @@ class User implements UserInterface
         return (string) $this->password;
     }
 
+    /**
+     * @param string $password
+     * @return User
+     */
     public function setPassword(string $password): self
     {
         $this->password = $password;
@@ -132,11 +150,18 @@ class User implements UserInterface
         // $this->plainPassword = null;
     }
 
+    /**
+     * @return string|null
+     */
     public function getEmail(): ?string
     {
         return $this->email;
     }
 
+    /**
+     * @param string $email
+     * @return User
+     */
     public function setEmail(string $email): self
     {
         $this->email = $email;
@@ -144,6 +169,9 @@ class User implements UserInterface
         return $this;
     }
 
+    /**
+     * @return \DateTimeInterface|null
+     */
     public function getRegisterDate(): ?\DateTimeInterface
     {
         return $this->registerDate;
@@ -157,6 +185,10 @@ class User implements UserInterface
         return $this->notifications;
     }
 
+    /**
+     * @param Notifications $notification
+     * @return User
+     */
     public function addNotification(Notifications $notification): self
     {
         if (!$this->notifications->contains($notification)) {
@@ -167,6 +199,10 @@ class User implements UserInterface
         return $this;
     }
 
+    /**
+     * @param Notifications $notification
+     * @return User
+     */
     public function removeNotification(Notifications $notification): self
     {
         if ($this->notifications->contains($notification)) {

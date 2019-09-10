@@ -7,18 +7,27 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Validator\Constraints\File;
 
 class PostFormType extends AbstractType
 {
+    private $urlGenerator;
+
+    public function __construct(UrlGeneratorInterface $urlGenerator)
+    {
+        $this->urlGenerator = $urlGenerator;
+    }
+
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
+            ->setAction($this->urlGenerator->generate("new_post"))
             ->add('content')
             ->add('image', FileType::class, [
                 'label' => 'Image',
                 'mapped' => false,
-                'required' => false,
+                'required' => true,
                 'constraints' => [
                     new File([
                         'maxSize' => '10000k',

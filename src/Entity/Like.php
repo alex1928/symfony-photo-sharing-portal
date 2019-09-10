@@ -36,16 +36,26 @@ abstract class Like
      */
     private $addDate;
 
+    /**
+     * @return int|null
+     */
     public function getId(): ?int
     {
         return $this->id;
     }
 
+    /**
+     * @return User|null
+     */
     public function getUser(): ?User
     {
         return $this->user;
     }
 
+    /**
+     * @param User|null $user
+     * @return Like
+     */
     public function setUser(?User $user): self
     {
         $this->user = $user;
@@ -53,11 +63,18 @@ abstract class Like
         return $this;
     }
 
+    /**
+     * @return \DateTimeInterface|null
+     */
     public function getAddDate(): ?\DateTimeInterface
     {
         return $this->addDate;
     }
 
+    /**
+     * @param \DateTimeInterface $addDate
+     * @return Like
+     */
     public function setAddDate(\DateTimeInterface $addDate): self
     {
         $this->addDate = $addDate;

@@ -42,16 +42,26 @@ class Notifications
      */
     private $readed;
 
+    /**
+     * @return int|null
+     */
     public function getId(): ?int
     {
         return $this->id;
     }
 
+    /**
+     * @return string|null
+     */
     public function getType(): ?string
     {
         return $this->type;
     }
 
+    /**
+     * @param string $type
+     * @return Notifications
+     */
     public function setType(string $type): self
     {
         $this->type = $type;
@@ -59,11 +69,18 @@ class Notifications
         return $this;
     }
 
+    /**
+     * @return string|null
+     */
     public function getContent(): ?string
     {
         return $this->content;
     }
 
+    /**
+     * @param string $content
+     * @return Notifications
+     */
     public function setContent(string $content): self
     {
         $this->content = $content;
@@ -71,11 +88,18 @@ class Notifications
         return $this;
     }
 
+    /**
+     * @return \DateTimeInterface|null
+     */
     public function getAddDate(): ?\DateTimeInterface
     {
         return $this->addDate;
     }
 
+    /**
+     * @param \DateTimeInterface $addDate
+     * @return Notifications
+     */
     public function setAddDate(\DateTimeInterface $addDate): self
     {
         $this->addDate = $addDate;
@@ -83,11 +107,18 @@ class Notifications
         return $this;
     }
 
+    /**
+     * @return User|null
+     */
     public function getUser(): ?User
     {
         return $this->user;
     }
 
+    /**
+     * @param User|null $user
+     * @return Notifications
+     */
     public function setUser(?User $user): self
     {
         $this->user = $user;
@@ -95,11 +126,18 @@ class Notifications
         return $this;
     }
 
+    /**
+     * @return bool|null
+     */
     public function getReaded(): ?bool
     {
         return $this->readed;
     }
 
+    /**
+     * @param bool $readed
+     * @return Notifications
+     */
     public function setReaded(bool $readed): self
     {
         $this->readed = $readed;

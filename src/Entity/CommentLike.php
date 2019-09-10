@@ -22,16 +22,26 @@ class CommentLike extends Like
      */
     private $comment;
 
+    /**
+     * @return int|null
+     */
     public function getId(): ?int
     {
         return $this->id;
     }
 
+    /**
+     * @return Comment|null
+     */
     public function getComment(): ?Comment
     {
         return $this->comment;
     }
 
+    /**
+     * @param Comment|null $comment
+     * @return CommentLike
+     */
     public function setComment(?Comment $comment): self
     {
         $this->comment = $comment;

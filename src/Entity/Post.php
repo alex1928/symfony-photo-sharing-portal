@@ -51,22 +51,35 @@ class Post
      */
     private $comments;
 
+    /**
+     * Post constructor.
+     */
     public function __construct()
     {
         $this->postLikes = new ArrayCollection();
         $this->comments = new ArrayCollection();
     }
 
+    /**
+     * @return int|null
+     */
     public function getId(): ?int
     {
         return $this->id;
     }
 
+    /**
+     * @return string|null
+     */
     public function getContent(): ?string
     {
         return $this->content;
     }
 
+    /**
+     * @param string|null $content
+     * @return Post
+     */
     public function setContent(?string $content): self
     {
         $this->content = $content;
@@ -74,6 +87,9 @@ class Post
         return $this;
     }
 
+    /**
+     * @return \DateTimeInterface|null
+     */
     public function getAddDate(): ?\DateTimeInterface
     {
         return $this->addDate;
@@ -87,6 +103,10 @@ class Post
         return $this->postLikes;
     }
 
+    /**
+     * @param User $user
+     * @return PostLike
+     */
     public function getUserLike(User $user): PostLike
     {
         return $this->postLikes->filter(function(PostLike $like) use ($user) {
@@ -94,11 +114,18 @@ class Post
         })->first();
     }
 
+    /**
+     * @return int
+     */
     public function getLikesCount(): int
     {
         return count($this->getPostLikes());
     }
 
+    /**
+     * @param User $user
+     * @return bool
+     */
     public function isLikedBy(User $user)
     {
         return $this->postLikes->exists(function (int $index, PostLike $like) use ($user) {
@@ -106,6 +133,10 @@ class Post
         });
     }
 
+    /**
+     * @param PostLike $postLike
+     * @return Post
+     */
     public function addPostLike(PostLike $postLike): self
     {
         if (!$this->postLikes->contains($postLike)) {
@@ -116,6 +147,10 @@ class Post
         return $this;
     }
 
+    /**
+     * @param PostLike $postLike
+     * @return Post
+     */
     public function removePostLike(PostLike $postLike): self
     {
         if ($this->postLikes->contains($postLike)) {
@@ -129,11 +164,18 @@ class Post
         return $this;
     }
 
+    /**
+     * @return string|null
+     */
     public function getImage(): ?string
     {
         return $this->image;
     }
 
+    /**
+     * @param string $image
+     * @return Post
+     */
     public function setImage(string $image): self
     {
         $this->image = $image;
@@ -141,11 +183,18 @@ class Post
         return $this;
     }
 
+    /**
+     * @return User|null
+     */
     public function getUser(): ?User
     {
         return $this->user;
     }
 
+    /**
+     * @param User|null $user
+     * @return Post
+     */
     public function setUser(?User $user): self
     {
         $this->user = $user;
@@ -161,6 +210,10 @@ class Post
         return $this->comments;
     }
 
+    /**
+     * @param Comment $comment
+     * @return Post
+     */
     public function addComment(Comment $comment): self
     {
         if (!$this->comments->contains($comment)) {
@@ -171,6 +224,10 @@ class Post
         return $this;
     }
 
+    /**
+     * @param Comment $comment
+     * @return Post
+     */
     public function removeComment(Comment $comment): self
     {
         if ($this->comments->contains($comment)) {
