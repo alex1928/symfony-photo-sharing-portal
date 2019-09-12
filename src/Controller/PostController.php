@@ -3,7 +3,6 @@
 namespace App\Controller;
 
 use App\Entity\Comment;
-use App\Entity\Hashtag;
 use App\Entity\Post;
 use App\Entity\PostLike;
 use App\Form\CommentFormType;
@@ -11,8 +10,9 @@ use App\Form\PostFormType;
 use App\Repository\HashtagRepository;
 use App\Service\HashtagManager\HashtagManager;
 use App\Service\ImageUploader\PostImageUploader;
-use App\Service\PostsTextParser\PostsTextParser;
-use App\Service\TextFormatter\HashtagFormatter;
+use App\Service\TextFormatter\BasicTextFormatter;
+use App\Service\TextFormatter\Formatters\HashtagFormatter;
+use App\Service\TextFormatter\Formatters\HtmlFormatter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -23,11 +23,10 @@ class PostController extends AbstractController
     /**
      * @Route("/post/{id<\d+>}", name="post_show", methods={"GET"})
      */
-    public function index(Post $post)
+    public function index(Post $post, HashtagFormatter $hashtagFormatter, HtmlFormatter $htmlFormatter)
     {
-        $hashtagParser = new HashtagFormatter('<a href="/hashtag/${1}">${1}</a>');
-        $postsParser = new PostsTextParser([$hashtagParser]);
-        $postsParser->parse($post);
+        $postsFormatter = new BasicTextFormatter([$htmlFormatter, $hashtagFormatter]);
+        $postsFormatter->format($post);
 
         $comment = new Comment();
         $commentForm = $this->createForm(CommentFormType::class, $comment);

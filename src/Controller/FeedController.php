@@ -8,6 +8,7 @@ use App\Repository\PostRepository;
 use App\Service\ImageUploader\PostImageUploader;
 use App\Service\TextFormatter\BasicTextFormatter;
 use App\Service\TextFormatter\Formatters\HashtagFormatter;
+use App\Service\TextFormatter\Formatters\HtmlFormatter;
 use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -24,15 +25,14 @@ class FeedController extends AbstractController
      * @return Response
      * @throws Exception
      */
-    public function index(Request $request, PostRepository $postRepository, PostImageUploader $imageUploader)
+    public function index(Request $request, PostRepository $postRepository, PostImageUploader $imageUploader, HashtagFormatter $hashtagFormatter, HtmlFormatter $htmlFormatter)
     {
         $post = new Post();
         $newPostForm = $this->createForm(PostFormType::class, $post);
         $imagesDirectory = $this->getParameter('images_directory');
         $posts = $postRepository->getLastPosts(10);
 
-        $hashtagFormatter = new HashtagFormatter('<a href="/hashtag/${1}">${1}</a>');
-        $postsFormatter = new BasicTextFormatter([$hashtagFormatter]);
+        $postsFormatter = new BasicTextFormatter([$htmlFormatter, $hashtagFormatter]);
         $postsFormatter->formatMany($posts);
 
 

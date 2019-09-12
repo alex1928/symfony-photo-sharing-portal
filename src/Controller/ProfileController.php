@@ -7,6 +7,7 @@ use App\Repository\PostRepository;
 use App\Service\HashtagManager\HashtagManager;
 use App\Service\TextFormatter\BasicTextFormatter;
 use App\Service\TextFormatter\Formatters\HashtagFormatter;
+use App\Service\TextFormatter\Formatters\HtmlFormatter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\HttpFoundation\Request;
@@ -54,13 +55,11 @@ class ProfileController extends AbstractController
     /**
      * @Route("/profile/{id<\d+>}", name="profile_show")
      */
-    public function index(User $user, PostRepository $postRepository)
+    public function index(User $user, PostRepository $postRepository, HashtagFormatter $hashtagFormatter, HtmlFormatter $htmlFormatter)
     {
         $posts = $postRepository->getLastPostsByUser($user, 15);
 
-
-        $hashtagFormatter = new HashtagFormatter('<a href="/hashtag/${1}">${1}</a>');
-        $postsFormatter = new BasicTextFormatter([$hashtagFormatter]);
+        $postsFormatter = new BasicTextFormatter([$htmlFormatter, $hashtagFormatter]);
         $postsFormatter->format($user);
 
         return $this->render('profile/index.html.twig', [

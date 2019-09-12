@@ -5,6 +5,7 @@
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
     images_directory: '%kernel.project_dir%/public/uploads/images'
+    hashtag_replacement_pattern: '<a href="/hashtag/${1}">${1}</a>'
 
 services:
     # default configuration for services in *this* file
@@ -40,3 +41,7 @@ services:
     App\Service\ImageUploader\PostImageUploader:
         arguments:
             $targetDirectory: '%images_directory%'
+
+    App\Service\TextFormatter\Formatters\HashtagFormatter:
+        arguments:
+            $replacementPattern: '%hashtag_replacement_pattern%'
