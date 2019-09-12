@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Service\HashtagManager\Hashtaggable;
+use App\Service\TextFormatter\Formattable;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -15,7 +16,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
  * @UniqueEntity(fields={"username"}, message="There is already an account with this username")
  * @UniqueEntity(fields={"email"}, message="There is already an account with this email")
  */
-class User implements UserInterface, Hashtaggable
+class User implements UserInterface, Hashtaggable, Formattable
 {
     /**
      * @ORM\Id()
@@ -245,6 +246,11 @@ class User implements UserInterface, Hashtaggable
         return $this->getAboutMe();
     }
 
+    public function setContent(?string $content)
+    {
+        $this->aboutMe = $content;
+    }
+
     /**
      * @param string|null $aboutMe
      * @return User
@@ -290,5 +296,10 @@ class User implements UserInterface, Hashtaggable
         }
 
         return $this;
+    }
+
+    public function clearHashtags()
+    {
+        $this->hashtags->clear();
     }
 }

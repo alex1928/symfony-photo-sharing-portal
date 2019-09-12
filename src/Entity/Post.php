@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Service\HashtagManager\Hashtaggable;
+use App\Service\TextFormatter\Formattable;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -11,7 +12,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
 /**
  * @ORM\Entity(repositoryClass="App\Repository\PostRepository")
  */
-class Post implements Hashtaggable
+class Post implements Hashtaggable, Formattable
 {
     /**
      * @ORM\Id()
@@ -274,5 +275,10 @@ class Post implements Hashtaggable
         }
 
         return $this;
+    }
+
+    public function clearHashtags()
+    {
+        $this->hashtags->clear();
     }
 }

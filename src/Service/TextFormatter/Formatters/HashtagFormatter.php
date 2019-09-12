@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Service\TextParser;
+namespace App\Service\TextFormatter\Formatters;
 
 
 /**
- * Class HashtagParser
+ * Class HashtagFormatter
  * @package App\Service\TextParser
  */
-class HashtagParser implements TextParserInterface
+class HashtagFormatter implements TextFormatterInterface
 {
 
     /**
@@ -17,7 +17,7 @@ class HashtagParser implements TextParserInterface
     /**
      * @var
      */
-    private $parsedText;
+    private $formattedText;
     /**
      * @var
      */
@@ -32,7 +32,7 @@ class HashtagParser implements TextParserInterface
     private $searchPattern = "/(#\w+)/";
 
     /**
-     * HashtagParser constructor.
+     * HashtagFormatter constructor.
      * @param string $replacementPattern
      */
     public function __construct(string $replacementPattern)
@@ -44,7 +44,7 @@ class HashtagParser implements TextParserInterface
      * @param string $rawText
      * @return string
      */
-    public function parse(string $rawText): string
+    public function format(string $rawText): string
     {
         $this->rawText = $rawText;
 
@@ -52,17 +52,17 @@ class HashtagParser implements TextParserInterface
         preg_match_all($this->searchPattern, $this->rawText, $matches);
         $this->hashtags = $matches[0];
 
-        $this->parsedText = preg_replace($this->searchPattern, $this->replacementPattern, $this->rawText);
+        $this->formattedText = preg_replace($this->searchPattern, $this->replacementPattern, $this->rawText);
 
-        return $this->parsedText;
+        return $this->formattedText;
     }
 
     /**
      * @return string
      */
-    public function getParsedText(): string
+    public function getFormattedText(): string
     {
-        return $this->parsedText;
+        return $this->formattedText;
     }
 
     /**

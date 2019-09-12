@@ -4,7 +4,7 @@ namespace App\Service\HashtagManager;
 
 use App\Entity\Hashtag;
 use App\Repository\HashtagRepository;
-use App\Service\TextParser\HashtagParser;
+use App\Service\TextFormatter\Formatters\HashtagFormatter;
 use Doctrine\ORM\EntityManagerInterface;
 
 /**
@@ -22,9 +22,9 @@ class HashtagManager
      */
     private $hashtagRepository;
     /**
-     * @var HashtagParser
+     * @var HashtagFormatter
      */
-    private $hashtagParser;
+    private $hashtagFormatter;
 
     /**
      * HashtagManager constructor.
@@ -35,7 +35,7 @@ class HashtagManager
     {
         $this->em = $entityManager;
         $this->hashtagRepository = $hashtagRepository;
-        $this->hashtagParser = new HashtagParser('<a href="/hashtag/${1}">${1}</a>');
+        $this->hashtagFormatter = new HashtagFormatter('<a href="/hashtag/${1}">${1}</a>');
     }
 
     /**
@@ -43,9 +43,15 @@ class HashtagManager
      */
     public function createHashtags(Hashtaggable $hashtaggable)
     {
-        $this->hashtagParser->parse($hashtaggable->getContent());
-        $hashtagsInText = $this->hashtagParser->getParsedData();
+        $this->hashtagFormatter->format($hashtaggable->getContent());
+        $hashtagsInText = $this->hashtagFormatter->getParsedData();
         $hashtagsInDatabase = $this->hashtagRepository->findHashtagsWithNames($hashtagsInText);
+
+        $assignedHashtags = $hashtaggable->getHashtags();
+
+        if($assignedHashtags->count() > 0) {
+            $hashtaggable->clearHashtags();
+        }
 
         foreach ($hashtagsInText as $textHashtag) {
             $hashtag = $this->getOrCreateHashtag($textHashtag, $hashtagsInDatabase);

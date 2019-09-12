@@ -4,6 +4,9 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Repository\PostRepository;
+use App\Service\HashtagManager\HashtagManager;
+use App\Service\TextFormatter\BasicTextFormatter;
+use App\Service\TextFormatter\Formatters\HashtagFormatter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\HttpFoundation\Request;
@@ -15,7 +18,7 @@ class ProfileController extends AbstractController
     /**
      * @Route("/profile/edit", name="profile_edit")
      */
-    public function edit(Request $request, PostRepository $postRepository)
+    public function edit(Request $request, PostRepository $postRepository, HashtagManager $hashtagManager)
     {
         $user = $this->getUser();
         $posts = $postRepository->getLastPostsByUser($user, 15);
@@ -27,6 +30,8 @@ class ProfileController extends AbstractController
         $form->handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid()) {
+
+            $hashtagManager->createHashtags($user);
 
             $em = $this->getDoctrine()->getManager();
             $em->persist($user);
@@ -52,6 +57,11 @@ class ProfileController extends AbstractController
     public function index(User $user, PostRepository $postRepository)
     {
         $posts = $postRepository->getLastPostsByUser($user, 15);
+
+
+        $hashtagFormatter = new HashtagFormatter('<a href="/hashtag/${1}">${1}</a>');
+        $postsFormatter = new BasicTextFormatter([$hashtagFormatter]);
+        $postsFormatter->format($user);
 
         return $this->render('profile/index.html.twig', [
             'controller_name' => 'ProfileController',

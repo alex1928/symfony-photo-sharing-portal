@@ -6,8 +6,8 @@ use App\Entity\Post;
 use App\Form\PostFormType;
 use App\Repository\PostRepository;
 use App\Service\ImageUploader\PostImageUploader;
-use App\Service\PostsTextParser\PostsTextParser;
-use App\Service\TextParser\HashtagParser;
+use App\Service\TextFormatter\BasicTextFormatter;
+use App\Service\TextFormatter\Formatters\HashtagFormatter;
 use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -31,9 +31,9 @@ class FeedController extends AbstractController
         $imagesDirectory = $this->getParameter('images_directory');
         $posts = $postRepository->getLastPosts(10);
 
-        $hashtagParser = new HashtagParser('<a href="/hashtag/${1}">${1}</a>');
-        $postsParser = new PostsTextParser([$hashtagParser]);
-        $postsParser->parseMany($posts);
+        $hashtagFormatter = new HashtagFormatter('<a href="/hashtag/${1}">${1}</a>');
+        $postsFormatter = new BasicTextFormatter([$hashtagFormatter]);
+        $postsFormatter->formatMany($posts);
 
 
         return $this->render('feed/index.html.twig', [

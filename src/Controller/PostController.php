@@ -12,7 +12,7 @@ use App\Repository\HashtagRepository;
 use App\Service\HashtagManager\HashtagManager;
 use App\Service\ImageUploader\PostImageUploader;
 use App\Service\PostsTextParser\PostsTextParser;
-use App\Service\TextParser\HashtagParser;
+use App\Service\TextFormatter\HashtagFormatter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -25,7 +25,7 @@ class PostController extends AbstractController
      */
     public function index(Post $post)
     {
-        $hashtagParser = new HashtagParser('<a href="/hashtag/${1}">${1}</a>');
+        $hashtagParser = new HashtagFormatter('<a href="/hashtag/${1}">${1}</a>');
         $postsParser = new PostsTextParser([$hashtagParser]);
         $postsParser->parse($post);
 
