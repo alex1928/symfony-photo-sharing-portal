@@ -9,7 +9,7 @@
                     <a class="float-left" href="{{ path('profile_show', {'id': post.user.getId}) }}"><strong>{{ post.user.getUsername }}</strong></a>
                 </p>
                 <div class="clearfix"></div>
-                <p>{{ comment.content }}</p>
+                <p>{{ comment.content|nl2br }}</p>
                 <p>
                     <a class="float-right btn text-white btn-danger comment-like-btn" post-comment-id="{{ comment.getId }}"> <i class="like-count">{{ comment.getLikesCount > 0 ? comment.getLikesCount : "" }}</i> <i class="fa fa-heart"></i> Like</a>
                 </p>

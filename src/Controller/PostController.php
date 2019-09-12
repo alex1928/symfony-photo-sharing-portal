@@ -16,7 +16,6 @@ use App\Service\TextFormatter\Formatters\HtmlFormatter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
-use App\Repository\PostLikeRepository;
 
 class PostController extends AbstractController
 {
