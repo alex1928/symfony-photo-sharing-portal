@@ -1,7 +1,9 @@
 # Photo sharing portal
 
 This will be some kind of mini-instagram. Users can upload posts containing photos. Other users can follow profiles and like/comment posts.
-Every user has his own proflile with all posts.
+Every user has his own proflile with all posts. 
+
+Every post and profile can contain hashtags. You can search for user and posts by hashtags.
 
 Project is based on Symfony 4.
 Project is still in development.
