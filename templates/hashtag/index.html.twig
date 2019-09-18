@@ -1,0 +1,26 @@
+{% extends 'base-authenticated.html.twig' %}
+
+{% block title %}{% trans %}Hashtag{% endtrans %} {{ hashtag.name }}{% endblock %}
+
+{% block content %}
+
+    <h1>{{ hashtag.name }}</h1>
+
+    <div class="row mt-3">
+
+        {% for post in hashtag.posts %}
+
+            {% include 'profile/post-miniature.html.twig' %}
+
+            {% if loop.index % 3 == 0 %}
+
+                <div class="w-100"></div>
+
+            {% endif %}
+
+
+        {% endfor %}
+
+    </div>
+
+{% endblock %}

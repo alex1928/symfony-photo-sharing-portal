@@ -53,6 +53,7 @@ class HashtagFormatter implements TextFormatterInterface
         $this->hashtags = $matches[0];
 
         $this->formattedText = preg_replace($this->searchPattern, $this->replacementPattern, $this->rawText);
+        $this->formattedText = str_replace('hashtag/#', 'hashtag/', $this->formattedText);
 
         return $this->formattedText;
     }
